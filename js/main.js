@@ -1,13 +1,11 @@
 $(function() {
 
-  var $buttons = $('.buttons span').not('#cancel, #calc'),
-      $cancel = $("#cancel"),
+  var $buttons = $('.buttons'),
       $calcScreen = $("#screen"),
-      $equals = $("#calc"),
       expression = "",
       currentOp = "";
 
-  $buttons.click(function() {
+  $buttons.on('click', 'span:not(#cancel, #calc)', function() {
     var $el = $(this);
     var isOp = $el.hasClass('operator');
     /* update the character view unless you clicked on an operator and the view is empty,
@@ -21,7 +19,7 @@ $(function() {
     $calcScreen.text(expression);
   });
 
-  $equals.click(function() {
+  $buttons.on('click', '#calc', function() {
     var numArray = expression.split(currentOp),
         num1 = numArray[0].length > 0 ? parseInt(numArray[0]) : 0,
         defaultNum2 = currentOp === "+" || currentOp === "-" ? 0 : 1,
@@ -43,7 +41,7 @@ $(function() {
     currentOp = "";
   });
 
-  $cancel.click(function() {
+  $buttons.on('click', '#cancel', function() {
     expression = "";
     currentOp = "";
     $calcScreen.text("");
